@@ -6,18 +6,27 @@ PeasyCam cam;
 PrintWriter output;
 
 int dim = 0;
+
+// Edge length of each cubie
 int len;
 Cubie[] cube;
+
+// Current move
 String move = "";
 
 ArrayList <String> allMoves = new ArrayList <String> ();
+
+// All moves in animation - either random scramble or solution
 String[] sequence;
-String ScrambleSequenceString = "F2 D3 R2 B2 L2 R2 U2 B2 U1 F2 B3 D1 B2 F3 L1 D1 B1 R3 B1 F3";
-String FinalSequenceString = "U3 R1 D3 B3 L3 F3 R1 F2 D1 R3 B2 D3 L3 U2 B2 U1 L2 U3 L2 D3 B2 U3 B2 U2 F2 R2 F2 L2 U2 L2";
+
+// Each item of sequence
 int counter = 0;
 ArrayList <Integer> indices = new ArrayList <Integer> ();
 
+// Display sequence
 boolean animate = false;
+
+// One space for scramble, two for solve
 int spaceCount = 0;
 
 void setup() {
@@ -25,16 +34,20 @@ void setup() {
   final JDialog dialog = new JDialog();
   dialog.setAlwaysOnTop(true);
   
+  // Dialog box for dimension (user input)
   String dimStr = (String)JOptionPane.showInputDialog(
                    dialog,
                    "Please enter dimension");
                    dialog.requestFocus();
   
+  // Set size of display screen
   size(600, 600, P3D);
   
+  // Taking in the user input
   try{
-    if(dimStr.length() < 0)
+    if(dimStr.length() < 0){
       System.exit(0);
+    }
     dim = Integer.parseInt(dimStr);
   } catch(NumberFormatException e){
     JOptionPane.showMessageDialog(null, "Error! Not a valid dimension");
@@ -42,34 +55,17 @@ void setup() {
   } catch(NullPointerException e){
     System.exit(0);
   }
+  
+  // Ensure only dimension greater than 1
   if (dim <= 1){
     JOptionPane.showMessageDialog(null, "Error! Not a valid dimension");
     System.exit(0);
   }
  
+  // Create array of cunies
   cube = new Cubie[dim*dim*dim];
   
   String[] allMovesArray = {"F", "B", "U", "D", "L", "R"};
-  
-  // Total number of moves in scramble
-  int totalScramble = int(random(10,25));
-  sequence = new String[totalScramble];
-  for (int i = 0; i < totalScramble; i++) {
-    // Number of times to move layer
-    int times = int(floor(random(1,4)));
-    
-    // Number of layers to move together
-    int layers = int(floor(random(1,dim)));
-    
-    // Points to the move number
-    int moveNum = int(floor(random(0,allMovesArray.length)));
-    
-    // Include multiple layers on if dimension is greater than 3
-    if (dim > 3)
-        sequence[i] = layers + allMovesArray[moveNum] + times;
-    else
-        sequence[i] = allMovesArray[moveNum] + times;
-  }
   
   // Make array list of all possible moves
   for (int i = 0; i < allMovesArray.length; i++){
@@ -103,14 +99,6 @@ void setup() {
       }
     }
   }
-  
-  // Write the random scramble into a file
-  output = createWriter("RandomScramble.txt");
-  for (int i = 0; i < totalScramble; i++) {
-    output.print(sequence[i] + " ");  
-  }
-  output.flush();
-  output.close();
   
 }
 
@@ -166,6 +154,11 @@ void draw() {
       textSize(32);
       text(move, 100, 100);
       cam.endHUD();
+      
+      // Rotate cube so at least 3 faces are visible
+      rotateX(-0.6);
+      rotateY(0.4);
+      rotateZ(PI + 0.3);
     
       // Animate the moves
       if (animate) {
