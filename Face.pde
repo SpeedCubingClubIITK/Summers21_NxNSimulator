@@ -8,6 +8,7 @@ class Face {
   }
 
 
+  // Employ rotation matrices corresponding to each axis to turn faces for given angle
   void turnZ(float angle) {
     PVector v2 = new PVector();
     v2.x = round(normal.x * cos(angle) - normal.y * sin(angle));
