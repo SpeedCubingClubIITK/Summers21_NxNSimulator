@@ -13,6 +13,7 @@ class Cubie {
     this.z = z;
     c = color(255);
 
+    // Assign projected faces and colours on each face
     faces[0] = new Face(new PVector(0, 0, -1), color(0, 0, 255));
     faces[1] = new Face(new PVector(0, 0, 1), color(0, 255, 0));
     faces[2] = new Face(new PVector(0, 1, 0), color(255, 255, 255));
@@ -21,6 +22,7 @@ class Cubie {
     faces[5] = new Face(new PVector(-1, 0, 0), color(255, 0, 0));
   }
   
+  // Turn faces about corresponding axes once in either clockwise or counter clockwise direction
   void turnFacesZ(int dir) {
     for (Face f : faces) {
       f.turnZ(dir*HALF_PI); 
@@ -33,12 +35,13 @@ class Cubie {
     }
   }
 
-    void turnFacesX(int dir) {
+  void turnFacesX(int dir) {
     for (Face f : faces) {
       f.turnX(dir*HALF_PI); 
     }
   }
   
+  // Change cubie co-ordinates as per turn
   void update(int x, int y, int z) {
     matrix.reset(); 
     matrix.translate(x, y, z);
@@ -48,11 +51,12 @@ class Cubie {
   }
 
   void show() {
-    //fill(c);
     noFill();
     stroke(0);
     strokeWeight(0.5);
     pushMatrix(); 
+    
+    // Show cubie as per turned co-ordinates
     applyMatrix(matrix);
     box(len);
     for (Face f : faces) {
