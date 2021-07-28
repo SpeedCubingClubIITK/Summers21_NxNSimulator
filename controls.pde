@@ -9,6 +9,7 @@ void keyPressed() {
     // First instance = random scramble
     if(spaceCount==1){
       deleteSolver();
+      counter = 0;
       scramble();
     }
     
@@ -21,6 +22,7 @@ void keyPressed() {
   // Read and animate from input file
   else if (key == ENTER){
     animate = true;
+    counter = 0;
     if (spaceCount < 1){
        deleteSolver();
        String[] lines = loadStrings("Input.txt");
@@ -34,11 +36,9 @@ void keyPressed() {
   applyMove(""+key); 
 }
 
-// Delete old solver file
 void deleteSolver(){
  
   String fileName = sketchPath("SolverOutput.txt");
-  println(fileName);
   File f = new File(fileName);
   if (f.exists()) {
     f.delete();
