@@ -22,6 +22,7 @@ void keyPressed() {
   else if (key == ENTER){
     animate = true;
     if (spaceCount < 1){
+       deleteSolver();
        String[] lines = loadStrings("Input.txt");
        sequence = lines[0].split(" "); 
        spaceCount = 1;
