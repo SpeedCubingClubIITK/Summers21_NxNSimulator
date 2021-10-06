@@ -2,8 +2,6 @@
 A cube simulator of any dimension. Can animate solver moves (from text file) for random scramble. 
 (Propagated to NxN from 3x3)
 
-Tanya Krishna Kumar
-
 Each cube has 6 faces and each of them follow the same sequence:
 •	Red and Orange along the X axis representing Right (R) and Left (L) respectively
 •	White and Yellow along the Y axis representing Up (U) and Down (D) respectively
